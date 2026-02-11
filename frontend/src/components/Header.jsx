@@ -1,0 +1,223 @@
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import API from "../api";
+
+const themes = {
+    brown: {
+        '--background': '96, 76, 57',
+        '--lightBackground': '139, 111, 85'
+    },
+    pink: {
+        '--background': '96, 57, 57',
+        '--lightBackground': '139, 85, 85'
+    },
+    purple: {
+        '--background': '96, 57, 93',
+        '--lightBackground': '134, 85, 139'
+    },
+    blue: {
+        '--background': '57, 76, 96',
+        '--lightBackground': '89, 116, 145'
+    }
+}
+
+export default function Header() {
+    const [username, setUsername] = useState("");
+    const [currentTheme, setCurrentTheme] = useState("brown");
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const userMenuRef = React.useRef(null);
+    const location = useLocation();
+
+    useEffect(() => {
+        const storedName = localStorage.getItem("username");
+        const storedUserId = localStorage.getItem("id");
+
+        if (storedName) setUsername(storedName);
+
+        loadUserTheme(storedUserId);
+
+        function handleClickOutside(event) {
+            if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+                setUserMenuOpen(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const loadUserTheme = async (userId) => {
+        if (!userId) return;
+
+        try {
+            const response = await fetch(`${API}/user/theme?user_id=${userId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                applyTheme(data.theme);
+            } else {
+                const savedTheme = localStorage.getItem("theme") || "brown";
+                applyTheme(savedTheme);
+            }
+        } catch (error) {
+            console.error("Ошибка при загрузке темы:", error);
+            const savedTheme = localStorage.getItem("theme") || "brown";
+            applyTheme(savedTheme);
+        }
+    };
+
+    const saveUserTheme = async (themeName) => {
+        const userId = localStorage.getItem("id");
+        if (!userId) return;
+
+        try {
+            await fetch(`${API}/user/theme`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    theme: themeName
+                }),
+            });
+        } catch (error) {
+            console.error("Ошибка при сохранении темы:", error);
+        }
+    };
+    
+    const applyTheme = (themeName) => {
+        const theme = themes[themeName];
+        if (!theme) return;
+
+        Object.entries(theme).forEach(([variable, value]) => {
+            document.documentElement.style.setProperty(variable, value);
+        });
+
+        localStorage.setItem("theme", themeName);
+        setCurrentTheme(themeName);
+    };
+
+    const switchTheme = (themeName) => {
+        applyTheme(themeName);
+        saveUserTheme(themeName);
+        setUserMenuOpen(false);
+    };
+
+    function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("id");
+        localStorage.removeItem("theme");
+        window.location.href = "/login";
+    }
+
+    const getThemeDisplayName = (themeKey) => {
+        const names = {
+            brown: "Коричневая",
+            pink: "Красная",
+            purple: "Фиолетовая", 
+            blue: "Синяя"
+        };
+        return names[themeKey] || themeKey;
+    };
+
+    const isActiveLink = (path) => {
+        if (path === "/") {
+            return location.pathname === "/";
+        }
+        return location.pathname.startsWith(path);
+    };
+
+    return (
+        <header className="nav">
+            <div className="brand">
+                <svg 
+                    style={{ height: "40px", marginRight: "8px" }} 
+                    viewBox="0 0 512 512"
+                    fill={`rgb(${themes[currentTheme]['--background']})`}
+                >
+                    <g transform="translate(0, 512) scale(0.1, -0.1)" fill={`rgb(${themes[currentTheme]['--background']})`} stroke="none">
+                        <path d="M1980 5105 c-248 -50 -467 -241 -544 -473 -30 -88 -32 -121 -11 -162 28 -54 69 -74 167 -78 l87 -4 -5 -47 c-3 -25 -7 -51 -9 -58 -8 -26 17 -148 41 -199 14 -31 24 -56 23 -58 -2 -1 -33 -13 -69 -26 -134 -47 -398 -162 -475 -206 -109 -63 -213 -142 -312 -237 -81 -78 -83 -79 -83 -50 0 35 12 52 138 193 128 143 147 158 201 165 64 9 90 21 103 50 9 21 8 32 -5 60 -19 39 -58 52 -130 41 -80 -13 -134 -53 -274 -206 -187 -204 -217 -274 -173 -409 l22 -69 -62 -94 c-294 -446 -405 -1039 -299 -1603 113 -604 470 -1114 944 -1349 323 -160 479 -221 661 -256 416 -80 848 10 1214 252 132 87 170 124 170 162 0 47 -24 76 -64 76 -25 0 -51 -13 -97 -47 -178 -132 -380 -229 -577 -278 -92 -23 -338 -51 -377 -43 -10 1 26 15 79 31 631 177 1114 791 1221 1553 73 515 -30 1034 -290 1462 l-26 42 43 -28 c85 -57 177 -68 270 -32 29 11 54 20 55 20 0 0 22 -35 47 -78 128 -218 215 -462 263 -737 25 -145 25 -519 0 -669 -36 -210 -97 -405 -189 -598 -58 -123 -59 -148 -2 -175 66 -32 99 6 188 217 69 165 119 336 153 530 21 121 29 463 13 602 -35 327 -149 669 -310 932 l-51 82 28 50 c24 42 28 60 28 129 0 107 -21 144 -174 313 -141 157 -177 187 -244 207 -93 27 -186 11 -257 -44 -54 -42 -57 -43 -89 -26 -65 33 -208 86 -300 111 -53 15 -98 28 -100 29 -1 2 5 28 15 57 19 55 25 181 11 231 l-7 27 67 0 c90 0 136 14 167 51 35 41 41 73 28 138 -7 30 -11 55 -9 56 1 1 32 5 69 8 l67 6 12 -37 c17 -53 52 -105 94 -139 46 -38 372 -222 434 -245 59 -22 154 -23 215 -2 l47 16 31 -28 c51 -49 53 -60 18 -112 -42 -63 -64 -143 -57 -207 5 -51 126 -433 154 -488 40 -79 164 -167 235 -167 25 0 29 -6 48 -69 11 -37 20 -74 19 -82 0 -8 -19 -28 -42 -44 -87 -64 -139 -197 -118 -304 17 -82 213 -453 272 -512 113 -115 307 -119 432 -8 84 73 124 200 98 306 -17 66 -207 425 -255 480 -45 51 -120 92 -185 102 l-45 6 -24 75 c-15 50 -19 76 -12 78 6 2 30 18 53 36 81 62 137 195 122 289 -12 67 -135 438 -160 482 -33 57 -92 110 -150 137 -40 18 -68 23 -135 23 l-84 0 -36 39 c-64 71 -64 71 -39 124 18 37 23 63 22 117 -2 115 -48 210 -127 264 -67 46 -383 221 -427 237 -141 49 -318 -25 -382 -160 l-26 -54 -78 -6 c-43 -4 -92 -8 -108 -10 -26 -3 -35 2 -54 30 -39 57 -146 157 -205 193 -161 97 -351 131 -526 96z m314 -165 c73 -23 167 -78 219 -128 l38 -37 -30 -12 c-52 -22 -68 -86 -31 -123 16 -16 33 -20 89 -20 68 0 69 0 80 -31 6 -18 11 -34 11 -35 0 -2 -44 -4 -98 -4 -96 0 -99 1 -127 30 -138 144 -387 173 -565 65 -30 -19 -68 -47 -84 -64 -29 -31 -31 -31 -129 -31 -114 0 -110 -7 -53 109 57 118 188 231 321 276 110 38 245 40 359 5z m1207 -170 c202 -113 225 -130 245 -177 14 -31 20 -113 9 -113 -3 0 -23 18 -44 40 -29 30 -46 40 -69 40 -76 0 -97 -83 -37 -148 19 -22 32 -42 28 -46 -10 -10 -72 -7 -96 5 -12 6 -105 57 -206 112 -140 78 -189 110 -207 137 l-24 35 42 7 c52 9 79 35 80 76 1 36 -26 72 -53 72 -42 0 -23 37 31 59 59 25 108 9 301 -99z m-1250 -238 c179 -87 227 -310 99 -455 -137 -157 -407 -124 -500 60 -33 64 -39 166 -15 230 30 78 115 158 196 182 57 17 168 8 220 -17z m1940 -511 c27 -34 149 -419 149 -470 0 -46 -11 -73 -43 -108 -28 -31 -35 -29 -43 12 -14 77 -76 108 -133 69 -20 -15 -23 -23 -19 -65 3 -28 1 -49 -4 -49 -6 0 -23 14 -38 30 -21 23 -45 81 -93 228 -36 108 -68 210 -71 225 -7 32 7 93 28 122 14 19 15 19 51 -18 27 -28 44 -37 70 -37 46 0 79 41 71 88 l-5 32 31 -17 c16 -10 39 -29 49 -42z m-1591 -120 c58 -16 139 -45 216 -78 l61 -26 -1 -86 c-1 -47 3 -97 8 -111 l9 -25 -34 28 c-156 128 -271 202 -403 260 l-78 34 26 20 c23 19 30 19 88 8 35 -7 83 -18 108 -24z m649 -42 c48 -17 296 -296 305 -344 10 -54 -9 -99 -65 -149 -89 -80 -148 -76 -237 17 -97 101 -193 210 -213 242 -47 75 6 184 111 229 43 19 58 19 99 5z m-1158 -45 c110 -20 208 -49 294 -86 448 -194 796 -651 920 -1208 64 -290 66 -608 5 -905 -110 -531 -442 -993 -862 -1198 -186 -91 -350 -130 -553 -130 -210 -1 -385 40 -566 131 -669 337 -1031 1201 -864 2057 119 610 508 1104 1015 1287 175 63 435 85 611 52z m2349 -879 c32 -16 63 -67 180 -290 63 -120 74 -147 74 -190 1 -153 -188 -223 -286 -107 -15 18 -69 114 -122 216 -84 160 -96 190 -96 233 0 49 32 118 55 118 4 0 13 -15 20 -34 11 -35 47 -71 71 -71 54 0 91 53 75 108 -11 37 -10 37 29 17z"/>
+                        <path d="M1830 3693 c-709 -43 -1270 -764 -1270 -1633 0 -925 628 -1674 1374 -1637 299 14 559 133 788 360 455 450 617 1212 402 1880 -205 641 -737 1064 -1294 1030z m237 -168 c213 -45 387 -141 551 -304 523 -519 600 -1477 171 -2120 -370 -554 -1003 -689 -1499 -320 -561 418 -745 1333 -409 2039 182 382 477 631 839 708 71 15 270 14 347 -3z"/>
+                        <path d="M1848 3420 c-33 -25 -39 -49 -22 -88 14 -34 48 -48 90 -38 28 7 55 57 46 88 -6 23 -49 58 -72 58 -10 0 -29 -9 -42 -20z"/>
+                        <path d="M1775 3116 c-81 -19 -128 -40 -206 -92 -134 -88 -259 -249 -335 -428 -76 -180 -105 -328 -105 -542 -1 -384 148 -735 394 -930 119 -94 232 -136 367 -136 94 0 156 15 244 59 241 119 429 402 497 748 22 109 19 438 -5 545 -54 247 -150 435 -301 586 -128 129 -256 191 -409 199 -50 3 -104 -1 -141 -9z m245 -163 c170 -58 340 -262 418 -503 40 -121 53 -195 59 -330 14 -323 -79 -613 -258 -805 -209 -223 -452 -235 -667 -31 -360 339 -393 1066 -68 1471 153 191 333 260 516 198z"/>
+                        <path d="M1843 2576 l-28 -24 -3 -237 -3 -237 -85 -104 c-46 -57 -85 -112 -85 -122 -4 -57 21 -84 75 -80 38 3 46 10 138 118 54 63 102 131 108 150 8 23 10 118 8 273 l-3 239 -28 24 c-35 30 -59 30 -94 0z"/>
+                        <path d="M1062 2937 c-12 -13 -22 -36 -22 -51 0 -34 41 -76 75 -76 33 0 75 41 75 73 0 67 -83 102 -128 54z"/>
+                        <path d="M2602 2937 c-12 -13 -22 -36 -22 -51 0 -34 41 -76 75 -76 33 0 75 41 75 73 0 67 -83 102 -128 54z"/>
+                        <path d="M830 2110 c-30 -30 -27 -83 6 -109 30 -24 43 -26 78 -10 33 15 50 57 37 92 -19 48 -85 63 -121 27z"/>
+                        <path d="M2840 2110 c-30 -30 -27 -83 6 -109 31 -24 43 -26 78 -10 31 14 49 61 36 94 -18 46 -85 60 -120 25z"/>
+                        <path d="M1065 1260 c-42 -46 -7 -123 54 -123 64 0 96 78 51 123 -26 26 -81 26 -105 0z"/>
+                        <path d="M2605 1260 c-42 -46 -7 -123 55 -123 62 0 96 77 54 124 -24 26 -85 25 -109 -1z"/>
+                        <path d="M1839 792 c-33 -27 -30 -78 5 -109 34 -29 58 -29 90 0 74 66 -17 171 -95 109z"/>
+                        <path d="M3518 868 c-8 -7 -42 -46 -74 -87 -32 -41 -70 -87 -83 -104 -33 -40 -32 -84 3 -114 15 -12 37 -23 48 -23 39 0 212 200 224 257 8 41 -27 83 -70 83 -18 0 -39 -6 -48 -12z"/>
+                    </g>
+                </svg>
+                <h2>Марти</h2>
+            </div>
+            <div className="nav-center">
+                <div className="nav-links">
+                    <Link 
+                        to="/"
+                        className={`nav-link ${isActiveLink("/") ? "active" : ""}`}
+                    >
+                        Задачи
+                    </Link>
+                    <Link 
+                        to="/page/TaskCalendar"
+                        className={`nav-link ${isActiveLink("/page/TaskCalendar") ? "active" : ""}`}
+                    >
+                        Календарь
+                    </Link>
+                </div>
+            </div>
+
+            <div className="user-menu-container" ref={userMenuRef}>
+                <button 
+                    className="user-menu-trigger"
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                >
+                    <span className="username">{username}</span>
+                </button>
+
+                {userMenuOpen && (
+                    <div className="user-menu">
+                        <div className="menu-section">
+                            <div className="menu-section-title">Тема</div>
+                            {Object.keys(themes).map(themeKey => (
+                                <button
+                                    key={themeKey}
+                                    onClick={() => switchTheme(themeKey)}
+                                    className={`theme-menu-option ${currentTheme === themeKey ? 'active' : ''}`}
+                                >
+                                    <span className="theme-color-indicator" 
+                                          style={{ backgroundColor: `rgb(${themes[themeKey]['--background']})` }}>
+                                    </span>
+                                    {getThemeDisplayName(themeKey)}
+                                    {currentTheme === themeKey && <span className="menu-check">✓</span>}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="menu-divider"></div>
+
+                        <button 
+                            onClick={logout} 
+                            className="logout-btn"
+                        >
+                            Выйти
+                        </button>
+                    </div>
+                )}
+            </div>
+        </header>
+    );
+}

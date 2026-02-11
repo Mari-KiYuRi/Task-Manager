@@ -1,0 +1,2678 @@
+:root {
+  --background: 96, 76, 57;
+  --lightBackground: 139, 111, 85;
+  --card: 239, 226, 181;
+  
+  --success: rgba(60, 179, 60, 0.385);
+  --lightSuccess: rgba(8, 135, 8, 0.762);
+  --careSuccess: #b8dfb6;
+
+  --mixed: #e4da18 ;
+
+  --danger: rgba(255, 48, 48, 0.356);
+  --lightDanger: rgba(209, 0, 0, 0.701);
+  --careDanger: rgb(225, 194, 194);
+
+  --pending: rgb(208, 105, 1);
+  --carePending: rgb(238, 210, 182);
+
+  --shadow: rgba(0, 0, 0, 0.1);
+  --white: 255, 255, 255;
+  --gray: rgb(128, 128, 128);
+}
+
+/* Базовые стили */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  background: rgb(var(--background));
+  color: rgb(var(--background));
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+
+
+
+
+
+
+/* Стили для пользовательского меню */
+.user-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-menu-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgb(var(--lightBackground));
+    color: rgb(var(--card));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.user-menu-trigger:hover {
+    background: rgb(var(--card));
+    color: rgb(var(--background));
+    transform: translateY(-1px);
+}
+
+.username {
+    font-weight: 500;
+}
+
+.dropdown-arrow {
+    font-size: 0.8em;
+    transition: transform 0.2s ease;
+}
+
+.user-menu-trigger:hover .dropdown-arrow {
+    transform: translateY(1px);
+}
+
+.user-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgb(var(--lightBackground));
+    border: 1px solid rgb(var(--card));
+    border-radius: 12px;
+    padding: 16px;
+    min-width: 200px;
+    box-shadow: 0 8px 24px var(--shadow);
+    z-index: 1000;
+    margin-top: 8px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.menu-section {
+    margin-bottom: 12px;
+}
+
+.menu-section-title {
+    color: rgb(var(--card));
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.theme-menu-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: rgb(var(--card));
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.theme-menu-option:hover {
+    background: rgba(var(--card), 0.2);
+}
+
+.theme-menu-option.active {
+    background: rgba(var(--card), 0.3);
+    font-weight: 600;
+}
+
+.theme-color-indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(var(--card), 0.3);
+    flex-shrink: 0;
+}
+
+.menu-check {
+    margin-left: auto;
+    font-weight: bold;
+    color: rgb(var(--card));
+}
+
+.menu-divider {
+    height: 1px;
+    background: rgba(var(--card), 0.3);
+    margin: 12px 0;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: rgb(var(--card));
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 0, 0, 0.1);
+    color: var(--lightDanger);
+}
+
+.logout-icon {
+    font-size: 1.1rem;
+}
+
+/* Анимация для меню */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+  .brand {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .nav-links {
+    margin-left: 0;
+    gap: 20px;
+  }
+
+  .nav-link {
+    font-size: 1em;
+    padding: 6px 2px;
+  }
+
+  .user-menu {
+    right: -10px;
+    min-width: 180px;
+  }
+
+  .user-menu-trigger {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .username {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+    }
+    
+    .brand {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .nav-links {
+        gap: 16px;
+        margin-left: 0;
+    }
+    
+    .nav-link {
+        font-size: 0.95em;
+    }
+    
+    .user-menu-container {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .user-menu {
+        position: fixed;
+        top: 80px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 360px) {
+    .nav-links {
+        gap: 12px;
+    }
+    
+    .nav-link {
+        font-size: 0.9em;
+    }
+    
+    .user-menu-trigger {
+        padding: 4px 8px;
+        font-size: 0.85rem;
+    }
+}
+
+
+
+
+
+
+
+
+/* Контейнеры */
+.container {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 16px;
+}
+
+.week-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgb(var(--background));
+  min-height: calc(100vh - 60px);
+}
+
+/* Навигация */
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 6px;
+  background: rgb(var(--card));
+  box-shadow: 0 6px 18px var(--shadow);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-link {
+    color: rgb(var(--background));
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 8px 4px;
+    position: relative;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    color: rgb(var(--background));
+    transform: translateY(-1px);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: rgb(var(--background));
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    width: 100%;
+    background: rgb(var(--background));
+}
+
+.brand-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+  flex-direction: row;
+  font-weight: 700;
+  color: rgb(var(--background));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav a {
+  color: rgb(var(--background));
+  text-decoration: none;
+  font-size: 1.7em;
+  font-weight: 700;
+}
+
+/* Карточки */
+.card {
+  background: rgb(var(--card));
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px var(--shadow);
+  border: 1px solid rgb(var(--card));
+}
+
+.task-panel-center {
+  background: rgb(var(--card));
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid var(--border);
+}
+
+/* Типография */
+h2 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.7em;
+  letter-spacing: 0.5px;
+  text-align: center;
+  color: rgb(var(--background));
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.task-header {
+  text-align: center;
+  color: rgb(var(--background));
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.5em;
+  font-weight: 600;
+  flex: 1;
+}
+
+/* Формы и инпуты */
+input, button, textarea, select {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+input[type="text"], input[type="password"], input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgb(var(--card));
+  color: rgb(var(--card));
+  font-size: 15px;
+  line-height: 1.4;
+  appearance: none;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  background: rgb(var(--lightBackground));
+}
+
+input::placeholder {
+  color: rgb(var(--card));
+  opacity: 0.6;
+}
+
+input:hover {
+  background-color: rgb(var(--lightBackground));
+  border-color: rgb(var(--lightBackground));
+}
+
+input:focus {
+  border-color: rgb(var(--lightBackground));
+  background-color: rgb(var(--card));
+  color: rgb(var(--background));
+  box-shadow: 0 0 0 3px rgba(var(--card), 0.2);
+  transform: translateY(-1px);
+}
+
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  background: rgb(var(--background));
+  color: rgb(var(--card));
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: rgb(var(--background));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px var(--shadow);
+  opacity: 0.9;
+}
+
+.btn.secondary {
+  background: rgb(var(--lightBackground));
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* Стили для переключателя тем */
+.theme-switcher {
+    position: relative;
+    display: inline-block;
+}
+
+.theme-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgb(var(--lightBackground));
+    border: 1px solid rgb(var(--background));
+    border-radius: 8px;
+    padding: 9px;
+    min-width: 100px;
+    box-shadow: 0 4px 12px var(--shadow);
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    padding: 6px 4px;
+    border: none;
+    background: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: rgb(var(--card));
+    transition: background-color 0.2s;
+}
+
+.theme-option:hover {
+    background-color: rgb(var(--lightBackground));
+}
+
+.theme-option.active {
+    background-color: rgb(var(--lightBackground));
+    font-weight: bold;
+}
+
+.theme-check {
+    margin-left: auto;
+    font-weight: bold;
+}
+
+/* Анимация для dropdown */
+.theme-dropdown {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Задачи */
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid rgb(var(--card));
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(var(--card), 0.2), rgba(var(--lightBackground)));
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px var(--shadow);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 16px;
+}
+
+.task-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.task-title {
+  font-weight: 500;
+  color: rgb(var(--background));
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.task-title.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-date {
+  margin-left: auto;
+  text-align: right;
+  font-size: 13px;
+  color: rgb(var(--background));
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.task.locked {
+  cursor: not-allowed;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.empty {
+  text-align: center;
+  padding: 20px;
+  color: rgb(var(--background));
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* Управление неделей */
+.week-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.control-group {
+  position: relative;
+}
+
+.week-range, .days-dropdown-trigger {
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border: 1px solid rgb(var(--card));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.week-range:hover, .days-dropdown-trigger:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  transform: translateY(-1px);
+}
+
+/* Календарь и выпадающие списки */
+.calendar-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  margin-top: 8px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.days-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgb(var(--lightBackground));
+  border: 1px solid rgb(var(--card));
+  border-radius: 10px;
+  z-index: 1000;
+  margin-top: 8px;
+  min-width: 280px;
+  box-shadow: 0 8px 24px var(--shadow);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.day-option {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgb(var(--card));
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(var(--card));
+}
+
+.day-option:last-child {
+  border-bottom: none;
+}
+
+.day-option:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+}
+
+.day-option.active {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  font-weight: 600;
+}
+
+.day-option.weekend {
+  border-left: 3px solid var(--danger);
+}
+
+.day-name {
+  text-transform: capitalize;
+  flex: 1;
+  font-weight: 500;
+}
+
+.day-date {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.today-badge {
+  background: rgb(var(--background));
+  color: rgb(var(--card));
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75em;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+/* Поиск */
+.search-group {
+  flex: 1;
+  max-width: 300px;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgb(var(--card));
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: rgb(var(--card));
+  opacity: 0.6;
+}
+
+.search-input:focus {
+  background: rgb(var(--card)) !important;
+  color: rgb(var(--background));
+  border-color: rgb(var(--background));
+  transform: translateY(-1px);
+}
+
+.search-input:not(:focus) {
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgb(var(--lightBackground));
+  border: 1px solid rgb(var(--card));
+  border-radius: 10px;
+  margin-top: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.search-result-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgb(var(--card));
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 200 !important;
+  color: rgb(var(--card));
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+}
+
+.search-task-title {
+  flex: 1;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-task-date {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.search-task-status {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.search-task-status.completed {
+  color: var(--success);
+  background: rgb(var(--card));
+}
+
+.search-task-status.pending {
+  color: var(--danger);
+  background: rgb(var(--card));
+}
+
+.search-no-results {
+  padding: 16px;
+  text-align: center;
+  color: rgb(var(--card));
+  font-style: italic;
+}
+
+/* Подзадачи */
+.subtasks-list {
+  margin-top: 8px;
+  border-radius: 10px;
+  border-left: 2px solid rgb(var(--lightBackground));
+  margin-left: 5%;
+  padding: 12px 16px;
+  animation: slideDown 0.3s ease;
+  background: linear-gradient(180deg, rgba(var(--card), 0.2), rgb(var(--lightBackground), 0.6));
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
+.subtasks-list span.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.subtasks-container {
+  margin-left: 1%;
+  border-left: 2px solid rgb(var(--lightBackground));
+}
+
+.subtask-count {
+  font-size: 0.8em;
+  color: rgb(var(--background));
+  margin-left: 8px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: rgb(var(--background));
+  font-size: 12px;
+  transition: all 0.2s ease;
+  min-width: 24px;
+  height: 24px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expand-btn:hover {
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+}
+
+.subtask-btn {
+  background: rgb(var(--lightBackground));
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: rgb(var(--card));
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtask-btn:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  transform: scale(1.1);
+}
+
+/* Навигация по дням */
+.day-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.nav-btn, .today-btn{
+  display: flex;
+  background: rgb(var(--background));
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  color: rgb(var(--card));
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 70px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-btn:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  transform: scale(1.05);
+}
+
+/* Ввод задач */
+.task-input-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.task-input-container input {
+  flex: 1;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Статусы задач */
+.task.pending {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.task.pending:hover {
+  background-color: rgba(var(--lightBackground), 0.2);
+}
+
+.task.overdue {
+  background-color: var(--danger);
+}
+
+.task.overdue:hover {
+  background-color: var(--lightDanger);
+}
+
+.task.done {
+  background-color: var(--success);
+}
+
+.task.done:hover {
+  background-color: var(--lightSuccess);
+}
+
+.delete-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgb(var(--background));
+  font-size: 16px;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+}
+
+.delete-btn:hover {
+  background: var(--danger);
+  color: rgb(var(--lightBackground));
+  transform: scale(1.05);
+}
+
+/* Календарь */
+.custom-calendar.react-datepicker {
+  background: rgb(var(--lightBackground));
+  border: none;
+  border-radius: 5%;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+  box-shadow: 0 4px 12px var(--shadow);
+  margin-top: 8px;
+  padding: 8px;
+  color: rgb(var(--card));
+}
+
+.custom-calendar .react-datepicker__header {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  background-color: initial;
+}
+
+.custom-calendar .react-datepicker__navigation {
+  display: flex;
+  background-color: rgb(var(--lightBackground));
+  margin: 6%;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.custom-calendar .react-datepicker__navigation-icon::before {
+  border-color: rgb(var(--card)) !important;
+}
+
+.custom-calendar .react-datepicker__navigation:hover {
+  background-color: rgb(var(--background));
+}
+
+.custom-calendar .react-datepicker__month {
+  margin: 0;
+  padding: 0;
+}
+
+.custom-calendar .react-datepicker__current-month {
+  background-color: rgb(var(--card));
+  color: rgb(var(--background));
+  padding: 12px;
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+  text-transform: capitalize;
+  flex-grow: 1;
+}
+
+.custom-calendar .react-datepicker__week {
+  background: inherit;
+}
+
+.custom-calendar .react-datepicker__day {
+  background: transparent !important;
+  color: rgb(var(--card));
+  border-radius: 50%;
+}
+
+.custom-calendar .react-datepicker__day-names {
+  background-color: rgb(var(--card));
+  margin: 0;
+  padding: 8px 0;
+  border-bottom: none;
+}
+
+.custom-calendar .react-datepicker__day-name {
+  color: rgb(var(--background));
+  font-weight: 600;
+  
+}
+
+.custom-calendar .react-datepicker__day--selected {
+  background-color: rgb(var(--card)) !important;
+  color: rgb(var(--background)) !important;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.custom-calendar .react-datepicker__day--today {
+  background-color: rgba(var(--card), 0.5) !important;
+  border-radius: 50%;
+  color: rgb(var(--background)) !important;
+}
+
+.custom-calendar .react-datepicker__day:hover {
+  background-color: rgba(var(--card), 0.2) !important;
+  border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Стили для Login.jsx и Register.jsx */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgb(var(--background)) 0%, rgb(var(--lightBackground)) 100%);
+  padding: 20px;
+  position: relative;
+}
+
+.auth-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.auth-background {
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-card {
+  background: rgb(var(--card));
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px var(--shadow);
+  border: 1px solid rgb(var(--card));
+  backdrop-filter: blur(10px);
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.auth-logo h1 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 2.5em;
+  color: rgb(var(--background));
+  margin: 0;
+  font-weight: 700;
+}
+
+.logo-icon {
+  height: 40px;
+  width: 40px;
+  filter: brightness(0.8);
+}
+
+.auth-subtitle {
+  color: rgb(var(--background));
+  font-size: 1.1em;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-weight: 600;
+  color: rgb(var(--background));
+  font-size: 0.95em;
+}
+
+.input-group input {
+  padding: 14px 16px;
+  border: 2px solid rgb(var(--card));
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: rgb(var(--lightBackground));
+}
+
+.input-group input:focus {
+  border-color: rgb(var(--card));
+  color: rgb(var(--card));
+  box-shadow: 0 0 0 3px var(--shadow);
+  transform: translateY(-2px);
+}
+
+.input-group input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.input-login_register::placeholder {
+  color: rgb(var(--card));
+  opacity: 0.6;
+}
+
+.auth-btn {
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.auth-btn.primary {
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+}
+
+.auth-btn.primary:hover:not(:disabled) {
+  background: rgb(var(--background));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.auth-footer {
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid rgb(var(--card));
+}
+
+.auth-footer p {
+  color: rgb(var(--lightBackground));
+  margin: 0 0 12px 0;
+  opacity: 0.8;
+}
+
+.auth-link {
+  color: rgb(var(--lightBackground));
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.auth-link:hover {
+  color: rgb(var(--background));
+  transform: translateY(-1px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .week-container {
+    padding: 12px;
+  }
+  
+  .week-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .control-group {
+    width: 100%;
+  }
+  
+  .week-range, .days-dropdown-trigger {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .calendar-popup, .days-dropdown {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 320px;
+    
+  }
+  
+  .task-panel-center {
+    padding: 16px;
+  }
+  
+  .search-group {
+    max-width: 100%;
+    order: -1;
+  }
+  
+  .day-navigation {
+    gap: 10px;
+  }
+  
+  .nav-btn {
+    padding: 8px 12px;
+    min-width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .task.subtask {
+    margin-left: 10px;
+  }  
+
+  .subtask-input {
+    margin-left: 15px;
+  }
+  
+  /* Адаптивность для аутентификации */
+  .auth-container {
+    padding: 10px;
+  }
+  
+  .auth-card {
+    padding: 30px 24px;
+  }
+  
+  .auth-logo {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .auth-logo h1 {
+    font-size: 2em;
+  }
+  
+  .logo-icon {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+
+/* Адаптивность для мобильных */
+@media (max-width: 480px) {
+  .day-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .day-navigation {
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .task-header {
+    font-size: 1.2em;
+    order: 0;
+    text-align: center;
+  }
+
+  .task {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .task-content {
+    width: 100%;
+  }
+  
+  .row {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .task-input-container {
+    flex-direction: column;
+  }
+  
+  .auth-card {
+    padding: 24px 16px;
+  }
+  
+  .auth-btn {
+    padding: 14px;
+  }
+}
+
+/* Улучшения для доступности */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Фокус для доступности */
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid rgb(var(--background));
+  outline-offset: 2px;
+}
+
+/* Улучшения скроллбара */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--card));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--lightBackground));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--background));
+}
+
+
+/* Стили для выбора периодичности */
+.repeat-select-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.repeat-select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgb(var(--card));
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+  font-size: 14px;
+  cursor: pointer;
+  appearance: none;
+  min-width: 140px;
+  transition: all 0.2s ease;
+}
+
+.repeat-select:hover {
+  background-color: rgb(var(--lightBackground));
+  border-color: rgb(var(--card));
+}
+
+.repeat-select:focus {
+  border-color: rgb(var(--lightBackground));
+  background-color: rgb(var(--background));
+  box-shadow: 0 0 0 3px rgba(129, 102, 77, 0.2);
+  outline: none;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+  .task-input-container {
+    flex-direction: row;
+  }
+  
+  .repeat-select {
+    min-width: 100%;
+    order: 1;
+  }
+  
+  .task-input-container input {
+    order: 0;
+  }
+  
+  .task-input-container button {
+    order: 2;
+  }
+}
+
+
+
+/* Стили для приоритетов */
+.priority-high {
+  background-color: var(--lightDanger);
+}
+
+.priority-medium {
+  background-color: var(--mixed);
+}
+
+.priority-low {
+  background-color: var(--lightSuccess);
+}
+
+/* Контейнеры для выбора приоритета */
+.priority-select-container {
+  position: relative;
+  flex-shrink: 0;
+  border: rgb(var(--lightBackground));
+  border-color: rgb(var(--background));
+}
+
+.priority-select {
+  padding: 12px 14px;
+  border: 1px solid rgb(var(--lightBackground));
+  border-radius: 10px;
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+  font-size: 14px;
+  cursor: pointer;
+  appearance: none;
+  min-width: 140px;
+  transition: all 0.2s ease;
+}
+
+.priority-select:hover {
+  background-color: rgb(var(--background));
+  border-color: rgb(var(--card));
+}
+
+.priority-select:focus {
+  border-color: rgb(var(--background));
+  background-color: rgb(var(--card));
+  outline: none;
+}
+
+.priority-select-small {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+  font-size: 12px;
+  cursor: pointer;
+  appearance: none;
+  min-width: 80px;
+}
+
+/* Индикатор приоритета */
+.priority-indicator {
+  margin-right: 10px;
+}
+
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.priority-badge:hover {
+  transform: scale(1.1);
+  background: rgba(var(--card), 0.3);
+  border: rgb(var(--background));
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+  .task-input-container {
+    flex-direction: column;
+  }
+  
+  .repeat-select,
+  .priority-select {
+    min-width: 100%;
+    order: 1;
+  }
+  
+  .task-input-container input {
+    order: 0;
+  }
+  
+  .task-input-container button {
+    order: 2;
+  }
+  
+  .priority-badge {
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
+  }
+}
+
+
+/* Стили для меню задач */
+.task-menu-container {
+  position: relative;
+  display: inline-block;
+  z-index: 2 !important;
+}
+
+.menu-trigger-btn {
+  background: rgb(var(--lightBackground));
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: rgb(var(--card));
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3 !important;
+}
+
+.menu-trigger-btn:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  transform: scale(1.1);
+}
+
+.task-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgb(var(--lightBackground));
+  border: 1px solid rgb(var(--card));
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 100;
+  margin-top: -75px;
+  min-width: 150px;
+  box-shadow: 0 4px 12px var(--shadow);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.task-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  color: rgb(var(--card));
+  cursor: pointer;
+  text-align: left;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.task-menu button:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+}
+
+.task:hover .task-menu {
+  pointer-events: none;
+}
+
+.task-menu-container:hover .menu-trigger-btn {
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+}
+
+.menu-trigger-btn {
+  background: rgb(var(--lightBackground));
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: rgb(var(--card));
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1001;
+}
+
+.menu-trigger-btn:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  transform: scale(1.1);
+}
+
+.task.menu-open .menu-trigger-btn {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.task:not(.menu-open) .menu-trigger-btn {
+  opacity: 1;
+}
+
+.task.menu-open:hover {
+  transform: none !important;
+  box-shadow: 0 2px 6px var(--shadow) !important;
+  background: linear-gradient(180deg, rgba(var(--card), 0.2), rgba(var(--lightBackground))) !important;
+}
+
+
+
+.task.menu-open .MuiCheckbox-root {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task.menu-open,
+.task.menu-open:hover {
+  transform: none !important;
+  box-shadow: 0 2px 6px var(--shadow) !important;
+  background: linear-gradient(180deg, rgba(var(--card), 0.2), rgba(var(--lightBackground))) !important;
+  cursor: default !important;
+}
+
+
+.task.menu-open .menu-trigger-btn,
+.task.menu-open .MuiCheckbox-root,
+.task.menu-open .priority-indicator,
+.task.menu-open .subtask-count {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+
+.task.menu-open .task-menu {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+.menu-trigger-btn {
+  background: rgb(var(--lightBackground));
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: rgb(var(--card));
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 100;
+}
+
+.menu-trigger-btn:hover {
+  background: rgb(var(--card));
+  color: rgb(var(--background));
+  transform: scale(1.1);
+}
+
+.task.menu-open .menu-trigger-btn {
+  visibility: hidden;
+  opacity: 0;
+}
+
+
+
+/* для меню в подзадачах */
+.subtasks-list .task-menu {
+  margin-top: -60px; 
+  z-index: 10000;
+}
+
+.subtasks-list.menu-open .menu-trigger-btn,
+.subtasks-list.menu-open .MuiCheckbox-root {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.subtasks-list.menu-open .task-menu {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+@media (max-width: 768px) {
+  .subtasks-list .task-menu {
+    margin-top: -50px;
+    min-width: 120px;
+  }
+  
+  .subtasks-list .task-menu button {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: rgb(var(--card));
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 350px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header h3 {
+  margin-top: 0px;
+  margin-left: 20%;
+  color: rgb(var(--background));
+}
+
+.modal-body p {
+  margin: 0 0 20px 0;
+  color: rgb(var(--background));
+  line-height: 1.4;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  flex-direction: column;
+  /* margin-top: 20px; */
+}
+
+.btn-danger {
+  background: var(--lightDanger);
+  color: rgb(var(--card));
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: var(--lightDanger);
+}
+
+.btn-secondary {
+  background: rgb(var(--lightBackground));
+  color: rgb(var(--card));
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgb(var(--background));
+}
+
+
+
+/* Принудительный перенос длинного текста */
+.task-title,
+.subtasks-list span {
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  line-height: 1.4 !important;
+  max-width: 84% !important;
+  display: block !important;
+}
+
+.task.main-task,
+.subtasks-list .task {
+  min-height: auto !important;
+  height: auto !important;
+  align-items: flex-start !important;
+  flex-wrap: wrap !important;
+}
+
+.task-content {
+  flex: 1 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.task-edit-input,
+.subtask-edit-input {
+  width: 100% !important;
+  min-height: 40px !important;
+  resize: vertical !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Стили для TaskCalendar.jsx */
+
+.calendar-container {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    max-width: 90%;
+    margin: auto ;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background: rgb(var(--card));
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px var(--shadow);
+    border: 1px solid var(--border)
+  }
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.calendar-title-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.calendar-month {
+    font-weight: bold;
+    color: rgb(var(--background));
+    font-size: 16px;
+    min-width: 60px;
+}
+
+.calendar-course-title {
+    font-size: 16px;
+    color: rgb(var(--background));
+    font-weight: normal;
+}
+
+.new-event-btn {
+    background: rgb(var(--lightBackground));
+    color: rgb(var(--lightBackground));
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.new-event-btn:hover {
+    background: rgb(var(--lightBackground));
+}
+
+.today-btn-month {
+  background: rgb(var(--card));
+  border: none;
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: rgb(var(--background));
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.month-navigation {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgb(var(--card));
+    border-radius: 4px;
+}
+
+.month-item {
+    font-weight: bold;
+    color: rgb(var(--background));
+    font-size: 14px;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgb(var(--card));
+}
+
+.day-header {
+    background: rgb(var(--card));
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(var(--lightBackground));
+    border: 1px solid rgb(var(--lightBackground));
+    font-size: 14px;
+}
+
+.calendar-week {
+    border: 1px solid rgb(var(--lightBackground));
+}
+
+.calendar-day {
+    width: 14.28%; /* 100% / 7 дней */
+    height: 80px;
+    padding: 8px;
+    border: 1px solid rgb(var(--lightBackground));
+    vertical-align: top;
+    text-align: right;
+    font-size: 14px;
+    color: rgb(var(--background));
+    background: rgb(var(--lightBackground));
+    position: relative;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .calendar-container {
+        padding: 12px;
+        margin: 8px auto;
+        max-width: 100%;
+    }
+    
+    .calendar-header {
+        flex-direction: row;
+        gap: 1%;
+    }
+
+    .month-year-selector {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .month-year-btn {
+      margin: 0;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    
+    .month-year-picker {
+      position: fixed;
+      top: 50%;
+      left:50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 300px;
+      z-index: 1001;
+      background: rgb(var(--card));
+      border: 2px solid rgb(var(--lightBackground));
+    }
+
+    .months-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+    }
+
+    .month-btn {
+      padding: 8px 2px;
+      font-size: 12px;
+    }
+
+    .year-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .year-btn {
+      padding: 6px 2px;
+      font-size: 12px;
+    }
+
+    .calendar-table {
+      font-size: 12px;
+      overflow: hidden;
+      table-layout: fixed;
+    }
+    
+    .day-header {
+        padding: 8px 2px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .calendar-day {
+        height: 60px;
+        padding: 2px;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .day-number {
+      font-size: 10px;
+      margin-bottom: 2px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .calendar-task {
+      font-size: 8px;
+      margin-bottom: 1px;
+      padding: 1px 3px;
+      border-radius: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: none;
+    }
+    
+    @media (max-width: 480px) {
+      .calendar-day {
+        height: 50px;
+      }
+    
+      .calendar-task:nth-child(1) {
+        display: block;
+      }
+    }
+    
+    @media (max-width: 481px) and (max-width: 481px) {
+      .calendar-day {
+        height: 70px;
+      }
+    
+      .calendar-task:nth-child(1),
+      .calendar-task:nth-child(2) {
+        display: block;
+      }
+    }
+
+    .more-tasks {
+      font-size: 8px;
+      margin-right: 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .day-status {
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      font-size: 8px;
+      padding: 1px 3px;
+      border-radius: 2px;
+    }
+
+    .nav-btn {
+      min-width: 50px;
+      height: 35px;
+      padding: 6px;
+    }
+    
+    @media (max-width: 768px) and (orientation: landscape) {
+      .calendar-day {
+        height: 70px;
+      }
+    
+      .calendar-task:nth-child(1),
+      .calendar-task:nth-child(2),
+      .calendar-task:nth-child(3) {
+        display: block;
+      }
+      
+      .calendar-task {
+        font-size: 7px;
+        padding: 0 1px;
+      }
+      
+      .day-number {
+        font-size: 9px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .calendar-container {
+        padding: 8px;
+      }
+      
+      .calendar-day {
+        height: 45px;
+        font-size: 10px;
+      }
+      
+      .day-header {
+        padding: 6px 1px;
+        font-size: 10px;
+      }
+      
+      .month-year-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      
+      .month-year-btn h2 {
+        font-size: 1.1em;
+      }
+    }
+
+    .calendar-day .day-status {
+      background: rgba(var(--background), 0.8);
+      color: rgb(var(--card));
+      font-size: bold;
+    }
+
+    .calendar-title-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .month-navigation {
+        flex-direction: column;
+        gap: 1px;
+    }
+    
+}
+
+
+
+
+/* Стили для выбора месяца и года */
+.month-year-selector {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.month-year-btn {
+    background: rgb(var(--card));
+    border: none;
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: 8px;
+    color: rgb(var(--background));
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.month-year-btn:hover {
+    background: rgb(var(--lightBackground));
+    color: rgb(var(--card));
+    transform: translateY(-1px);
+}
+
+.month-year-picker {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgb(var(--card));
+    border: 2px solid rgb(var(--lightBackground));
+    border-radius: 12px;
+    padding: 16px;
+    z-index: 1000;
+    margin-top: 8px;
+    box-shadow: 0 8px 24px var(--shadow);
+    min-width: 300px;
+}
+
+.years-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.year-btn {
+    background: rgb(var(--lightBackground));
+    border: none;
+    border-radius: 6px;
+    padding: 8px 4px;
+    color: rgb(var(--card));
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.year-btn:hover {
+    background: rgb(var(--background));
+    color: rgb(var(--card));
+}
+
+.year-btn.selected {
+    background: rgb(var(--background));
+    color: rgb(var(--card));
+    font-weight: bold;
+}
+
+.months-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgb(var(--lightBackground));
+}
+
+.month-btn {
+    background: rgb(var(--lightBackground));
+    border: none;
+    border-radius: 6px;
+    padding: 10px 4px;
+    color: rgb(var(--card));
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.month-btn:hover {
+    background: rgb(var(--background));
+    color: rgb(var(--card));
+}
+
+.month-btn.selected {
+    background: rgb(var(--background));
+    color: rgb(var(--card));
+    font-weight: bold;
+}
+
+.calendar-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .month-year-picker {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 320px;
+        z-index: 1001;
+    }
+    
+    .years-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .months-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .month-year-btn {
+        font-size: 13.5px;
+        order: -1;
+        width: 100%;
+        margin: 0;
+    }
+}
+
+
+/* Стили для календаря задач */
+.calendar-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(var(--lightBackground), 0.2);
+}
+
+.calendar-month-title {
+    margin: 0;
+    color: rgb(var(--background));
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgb(var(--card));
+    table-layout: fixed;
+}
+
+.day-header {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(var(--card));
+    border-bottom: 2px solid rgb(var(--lightBackground));
+    background: rgb(var(--background));
+}
+
+.calendar-day {
+    height: 120px;
+    vertical-align: top;
+    padding: 1%;
+    border: 1px solid rgb(var(--background));
+    cursor: pointer;
+    position: relative;
+    background: rgb(var(--card));
+    transition: background-color 0.2s;
+}
+
+.calendar-day.other-month {
+    background-color: rgba(var(--lightBackground), 0.5);
+    color: rgba(var(--lightBackground), 0.5);
+}
+
+.calendar-day.today {
+    background-color: rgba(var(--lightBackground), 0.79);
+}
+
+.calendar-day.weekend {
+    background-color: rgb(var(--lightBackground));
+}
+
+.day-number {
+    font-weight: bold;
+}
+
+.calendar-task {
+    font-size: 90%;
+    margin-bottom: 1%;
+    padding: 0 10%;
+    border-radius: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.calendar-task.completed {
+    background-color: var(--careSuccess);
+    color: var(--lightSuccess);
+    text-decoration: line-through;
+}
+
+.calendar-task.pending {
+    background-color: var(--carePending);
+    color: var(--pending);
+}
+
+.calendar-task.overdue {
+    background-color: var(--careDanger);
+    color: var(--lightDanger);
+}
+
+.more-tasks {
+    font-size: 10px;
+    color: rgb(var(--background));
+    font-style: italic;
+    margin-right: 25%;
+}
+
+.day-status {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.day-status.all-completed {
+    background-color: var(--lightSuccess);
+    color: rgb(var(--card));
+}
+
+.day-status.all-pending {
+    background-color: var(--lightDanger);
+    color: rgb(var(--card));
+}
+
+.day-status.all-overdue {
+    background-color: var(--pending);
+    color: var(--carePending);
+}
+
+.day-status.mixed {
+    background-color: var(--mixed);
+    color: rgb(var(--lightBackground));
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    color: var(--gray);
+}
