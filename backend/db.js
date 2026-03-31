@@ -9,7 +9,7 @@ export async function initDB() {
     driver: sqlite3.Database,
   });
 
-  console.log("✅ Подключено к SQLite");
+  console.log("Подключено к SQLite");
 
   // --- Создание таблицы пользователей ---
   await db.exec(`
@@ -46,11 +46,11 @@ export async function initDB() {
     );
   `);
 
-  console.log("✅ База данных SQLite инициализирована");
+  console.log("Бд SQLite инициализирована");
   return db;
 }
 
 export function getDB() {
-  if (!db) throw new Error("База данных не инициализирована!");
+  if (!db) throw new Error("Бд не инициализирована!");
   return db;
 }
